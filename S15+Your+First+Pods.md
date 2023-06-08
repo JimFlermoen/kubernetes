@@ -10,60 +10,74 @@
 ```shell
 kubectl version
 kubectl version --short
-
-# Run a Pod named my_nginx with NGINX webserver
+```
+> Run a Pod named my_nginx with NGINX webserver
+```shell
 kubectl run my-nginx --image nginx  
-
-# List the Pods
+```
+> List the Pods
+```shell
 kubectl get pods
-
-# See all objects
+```
+> See all objects
+```shell
 kubectl get all
 ```
 
 
 ## Your First Deployment with kubectl create
 
+> Creates a deployment of the NGINX web server
 ```shell
-# Creates a deployment of the NGINX web server
 kubectl create deployment my-nginx --image nginx
-
-# List the Pods
+```
+> List the Pods
+```shell
 kubectl get pods
-
-# See all objects
+```
+> See all objects
+```shell
 kubectl get all
-
-#Deletes the pod
+````
+> Deletes the pod
+```shell
 kubectl delete pod my-nginx
-
-# Deletes the Deployment> Can use "deploy" =="deployment", and "deployments"
+```
+> Deletes the Deployment> Can use "deploy" =="deployment", and "deployments"
+```shell
 kubectl delete deployment my-nginx
 ```
 
 ## Scaling ReplicaSets
 
+> Start a new deployment for one replica/Pod
 ```shell
-# Start a new deployment for one replica/Pod
 kubectl create deploy my-apache --image httpd
-kubectl get all
 
-# Scale to 2 replicas
+kubectl get all
+```
+> Scale to 2 replicas
+```shell
 kubectl scale deploy/my-apache --replicas 2
+
 kubectl get all
 ```
 
 ##  Inspect Deployments
 
+> Get container logs
 ```shell
-# Get container logs
 kubectl logs deployment/my-apache
-
-# Follow and list the last line of the logs for this deployment
+```
+> Follow and list the last line of the logs for this deployment
+```shell
  kubectl logs deployments/my-apache --follow --tail 1
-
-# Get a bunch of details about an object, including events (Get name of pod first)
+```
+> Get a bunch of details about an object, including events (Get name of pod first)
+```shell
 kubectl describe pod my-apache-55878d86f4-8rmv6
-
-# Watch command (without needing watch)
+```
+> Watch command (without needing watch)
+```shell
 kubectl get pods -w
+```
