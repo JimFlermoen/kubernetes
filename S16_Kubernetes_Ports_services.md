@@ -19,7 +19,7 @@ kubectl expose deploy httpenv --port 8888
 
 > Lookup what IP was allocated 
 ```shell
-kubetl get service
+kubectl get service
 ```
 > Run a single pod named "tmp-shell" that is removed(--rm) after exiting with a shell(-it) in the pod with an image that has curl in it. " -- " changes the cmd or what runs in the container, bash
 ```shell
