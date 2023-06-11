@@ -5,21 +5,23 @@ metadata:
 data:
   index.html: |
     <html>
-    <h1>Welcome Green Team</h1>
-    </br>
-    </html
+    <head><title>Welcome Green Team</title></head>
+    <body/>
     <h1>This is Deployment One</h1>
-    </html
+    </body></html>
+
 ---
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nginx-cm-2
 data:
   index.html: |
-    <html>
-    <h1>Welcome Green Team</h1>
-    </br>
-    </html
+   <html>
+    <head><title>Welcome Green Team</title></head>
+    <body/>
     <h1>This is Deployment Two</h1>
-    </html
+    </body></html>>
+
+---
