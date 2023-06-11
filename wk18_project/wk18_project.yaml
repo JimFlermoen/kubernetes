@@ -5,25 +5,27 @@ metadata:
 data:
   index.html: |
     <html>
-    <h1>Welcome Green Team</h1>
-    </br>
-    </html
+    <head><title>Welcome Green Team</title></head>
+    <body/>
     <h1>This is Deployment One</h1>
-    </html
+    </body></html>
+
 ---
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nginx-cm-2
 data:
   index.html: |
-    <html>
-    <h1>Welcome Green Team</h1>
-    </br>
-    </html
+   <html>
+    <head><title>Welcome Green Team</title></head>
+    <body/>
     <h1>This is Deployment Two</h1>
-    </html
+    </body></html>>
+
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -32,20 +34,27 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: app-nginx-1
+      app: nginx
   template:
     metadata:
       labels:
-        app: app-nginx-1
+        app: nginx
     spec:
       containers:
-        - name:  app-nginx-1
-          image: nginx
-          ports: 
-            - containerPort: 80
+      - name:  nginx
+        image: nginx
+        ports: 
+        - containerPort: 80
+        volumeMounts:
+        - name: config-1
+          mountPath: /usr/share/nginx/html
       volumes:
-        - name: nginx-cm-1
+      - name: config-1
+        configMap: 
+          name: nginx-cm-1
+
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -54,28 +63,40 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: app-nginx-2
+      app: nginx
   template:
     metadata:
       labels:
-        app: app-nginx-2
+        app: nginx
     spec:
       containers:
-        - name:  app-nginx-2
-          image: nginx
-          ports: 
-            - containerPort: 80
+      - name: nginx
+        image: nginx
+        ports: 
+        - containerPort: 80
+        volumeMounts:
+        - name: config-2
+          mountPath: /usr/share/nginx/html
       volumes:
-        - name: nginx-cm-2
+      - name: config-2
+        configMap:
+          name: nginx-cm-2
+                
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-nginx-service
+  name: nginx-service
 spec:
+  selector:
+    app: nginx
   type: NodePort
   ports:
-    - port: 80
-  selector:
-    app: nginx-deployment-1
-    app: nginx-deployment-2
+  - name: my-service
+    port: 80
+    targetPort: 80
+    nodePort: 32376
+
+
+
