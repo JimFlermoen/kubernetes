@@ -22,7 +22,7 @@ data:
     <head><title>Welcome Green Team</title></head>
     <body/>
     <h1>This is Deployment Two</h1>
-    </body></html>>
+    </body></html>
 
 ---
 
@@ -41,7 +41,7 @@ spec:
         app: nginx
     spec:
       containers:
-      - name:  nginx
+      - name: nginx
         image: nginx
         ports: 
         - containerPort: 80
@@ -95,8 +95,4 @@ spec:
   ports:
   - name: my-service
     port: 80
-    targetPort: 80
-    nodePort: 32376
-
-
 
