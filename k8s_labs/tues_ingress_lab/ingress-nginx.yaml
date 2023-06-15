@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: devsecops
+  name: devsecops-ingress-nginx
+  labels:
+    app.kubernetes.io/name: devsecops-ingress-nginx
+  annotations:
+    nginx.ingress.kubernetes.io/load-balance: "round_robin"
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /loan
+        pathType: Prefix
+        backend:
+          service:
+            name: devsecops-loan-clusterip
+            port:
+              number: 8111
+

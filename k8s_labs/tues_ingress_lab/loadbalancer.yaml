@@ -1,0 +1,16 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: devsecops
+  name: devsecops-loan-loadbalancer
+  labels:
+    app.kubernetes.io/name: devsecops-loan
+spec:
+  selector:
+    app.kubernetes.io/name: devsecops-loan
+  type: LoadBalancer
+  ports:
+  - port: 8111
+    targetPort: 8111
+    name: devsecops-loadbalancer-loan
