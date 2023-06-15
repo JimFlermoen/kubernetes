@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway    # This shouldn't be confused with an IngressGateway
+metadata:
+  name: api  # The name is arbitrary and it's only to identify and reference to the object within the cluster
+spec:
+  selector:
+    # This should match exactly as the app label in the pod
+    # prefixed by istio-ingressgateway in the istio-system namespace. 
+    # (As found in the previous step)
+    app: istio-ingressgateway
+  servers:
+  - port:
+      number: 8080 # Port 8080 as requested by security
+      name: http
+      protocol: HTTP # HTTP protocol as requested in the task
+    hosts:
+    - "*"
