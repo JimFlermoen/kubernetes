@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: development
+--- # Add these three hyphens to add a new object definition
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: development        # Scoped namespace
+  name: development-team   # An arbitrary name
+rules:
+- apiGroups: ["", "extensions", "apps"]
+
+  # Allow ONLY these resources
+  resources: ["deployments", "replicasets", "pods"]
+
+  # Allow ALL operations on the above resources
+  verbs: ["*"]
+--- # Add a new object
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: development
+  name: development-team
+subjects:
+- kind: Group
+  name: development # development group here
+  apiGroup: "rbac.authorization.k8s.io"
+roleRef:
+  kind: Role
+  name: development-team # role name here
+  apiGroup: rbac.authorization.k8s.io
+---  # Add a new object to limit the resources
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: development-limits # Arbitrary name
+  namespace: development   # Namespace to constrain
+spec:
+  limits:
+    - type: "Container"
+      max:
+        cpu: 20m
+        memory: 32Mi
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: development-pods-limits
+  namespace: development
+spec:
+  hard:
+    pods: "5"
